@@ -7,11 +7,17 @@ import com.csd.database.Entity.Person;
 import com.csd.database.HibernateSessionFactory;
 import com.csd.database.PersonDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.StandardEnvironment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +27,36 @@ public class HttpController {
 
     @Autowired
     private PersonDAO personDAO;
+
+
+
+
+    @GetMapping(value = "/table")
+    public ModelAndView table(){
+        return new ModelAndView("table");
+    }
+
+    @GetMapping(value = {"/about", "/"})
+    public ModelAndView about(){
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("author", "Работу выполнял: Загидуллин Амир Равилевич");
+        params.put("group", "Номер группы: ИКБО-02-17");
+        params.put("task", "Номер индивидуального задания: 11");
+        params.put("text", "Для каждого натурального числа в промежутке от m до n вывести все делители.\n Числа должны поступать в виде строки с некоторым разделителем; в массиве; отдельными значениями данных.");
+        return new ModelAndView("about", params);
+    }
+
+    @GetMapping(value = "/divisor")
+    public ModelAndView divisor(){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("divisor", "Please enter start and end numbers:");
+        params.put("submit", "Submit");
+
+        return new ModelAndView("divisor", params);
+    }
+
+    //_________________________________________________________________________
 
 
     public HttpController() {
